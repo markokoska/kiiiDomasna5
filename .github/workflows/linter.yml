@@ -12,25 +12,24 @@ jobs:
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_ALL_CODEBASE: false
           VALIDATE_DOCKERFILE: true
           VALIDATE_HTML: true
 
   build-and-push:
-    needs: lint  
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
+      
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
-
-      - name: Build and push Docker image
+      
+      - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: .  
-          push: true  
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/kiiiDomasna5:latest
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/my-web-app:latest
